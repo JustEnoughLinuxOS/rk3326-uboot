@@ -23,7 +23,7 @@
 #define	LCD_ROTATE_180		2
 #define	LCD_ROTATE_270		3
 
-#define	DEFAULT_LCD_ROTATE	LCD_ROTATE_270
+#define	DEFAULT_LCD_ROTATE	LCD_ROTATE_0
 
 /*----------------------------------------------------------------------------*/
 /* Max logo bmp file is 2M bytes */

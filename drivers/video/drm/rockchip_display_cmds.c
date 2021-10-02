@@ -39,16 +39,29 @@ void lcd_sync(void)
 /*----------------------------------------------------------------------------*/
 int lcd_getrot(void)
 {
-	unsigned long rot;;
-
+	unsigned long rot;
+	unsigned long default_rot;
+	switch(get_rg351_rev())
+	{
+		case MODEL_RG351P:
+			default_rot = LCD_ROTATE_270;
+		break;
+			
+		case MODEL_RG351MP:
+		case MODEL_RG351V:
+		default:
+			default_rot = LCD_ROTATE_0;
+		break;
+	
+	}
 	/* default lcd rotation setup*/
 	if (NULL == env_get("lcd_rotate"))
-		env_set_ulong("lcd_rotate", DEFAULT_LCD_ROTATE);
+		env_set_ulong("lcd_rotate", default_rot);
 
 	rot = simple_strtoul(env_get("lcd_rotate"), NULL, 10);
 	if (rot > LCD_ROTATE_270) {
-		env_set_ulong("lcd_rotate", DEFAULT_LCD_ROTATE);
-		rot = DEFAULT_LCD_ROTATE;
+		env_set_ulong("lcd_rotate", default_rot);
+		rot = default_rot;
 	}
 	return rot;
 }
@@ -489,6 +502,21 @@ int lcd_show_logo(void)
 static int do_lcd_cmds(cmd_tbl_t *cmdtp, int flag, int argc,
 				char *const argv[])
 {
+	unsigned long default_rot;
+	switch(get_rg351_rev())
+	{
+		case MODEL_RG351P:
+			default_rot = LCD_ROTATE_270;
+		break;
+			
+		case MODEL_RG351MP:
+		case MODEL_RG351V:
+		default:
+			default_rot = LCD_ROTATE_0;
+		break;
+	
+	}
+
 	switch(argc) {
 	case 2:
 		if (!strcmp("init", argv[1]))
@@ -501,7 +529,7 @@ static int do_lcd_cmds(cmd_tbl_t *cmdtp, int flag, int argc,
 			unsigned long rot;
 			rot = simple_strtoul(argv[2], NULL, 10);
 			if (rot > LCD_ROTATE_270)
-				rot = DEFAULT_LCD_ROTATE;
+				rot = default_rot;
 			env_set_ulong("lcd_rotate", rot);
 			return lcd_init();
 		}
@@ -560,7 +588,7 @@ static int do_lcd_cmds(cmd_tbl_t *cmdtp, int flag, int argc,
 /*----------------------------------------------------------------------------*/
 static char lcd_help_text[] = {
 	" - for odroid-goadv lcd control commands\n"
-	"init - lcd screen initialize.(default rotate = 3)\n"
+	"init - lcd screen initialize.(default rotate = 0)\n"
 	"init <rot(0~3)> - lcd screen initialize & rotate(0-4).\n"
 	"clear - lcd screen clear(bg color), move cursor position to 0, 0\n"
 	"clrline - lcd line clear(bg color), move cursor position to 0, line\n"

@@ -957,7 +957,7 @@
 	
 	rumble {
 		rumble_pins: rumble-pins {
-			rockchip,pins = <0 RK_PB7 RK_FUNC_GPIO &pcfg_pull_down>;
+			rockchip,pins = <0 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 	

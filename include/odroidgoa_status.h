@@ -6,6 +6,12 @@
 #ifndef _ODROIDGOA_STATUS_H_
 #define _ODROIDGOA_STATUS_H_
 
+enum rg351_rev{
+	MODEL_RG351P = 0,
+	MODEL_RG351V,
+	MODEL_RG351MP,
+};
+
 enum logo_storage {
 	LOGO_STORAGE_SPIFLASH = 0,
 	LOGO_STORAGE_SDCARD,
@@ -20,6 +26,7 @@ enum logo_mode {
 	LOGO_MODE_NO_SDCARD,
 };
 
+int get_rg351_rev(void);
 int odroid_display_status(int logo_mode, int logo_storage, const char *str);
 void odroid_wait_pwrkey(void);
 void odroid_alert_leds(void);

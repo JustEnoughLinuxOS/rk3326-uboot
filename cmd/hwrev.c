@@ -22,7 +22,7 @@ int do_hwrev(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 	/* RG351MP */
 	if (check_range(146, 186, hwrev_adc)) {
 		env_set("hwrev", "rg351mp");
-		env_set("dtb_name", "rk3326-rg351mp-linux-v11.dtb");
+		env_set("dtb_name", "rk3326-rg351mp-linux.dtb");
 	}
 	/* RG351V */
 	else if (check_range(494, 534, hwrev_adc)) {
@@ -41,7 +41,7 @@ int do_hwrev(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 	}
 #else
 		env_set("hwrev", "rg351mp");
-		env_set("dtb_name", "rk3326-rg351mp-linux-v11.dtb");
+		env_set("dtb_name", "rk3326-rg351mp-linux.dtb");
 
 #endif
 	printf("adc0 (hw rev) %d\n", hwrev_adc);

@@ -310,10 +310,12 @@ void board_check_hwrev(void)
 
 void board_set_spilayout(void)
 {
+#if 0	
 	char *hwrev = env_get("hwrev");
 
 	/* adjust only offsets, size values are same */
-	if (!strcmp(hwrev, "v10-go3")) {
+	if (strcmp(hwrev, "rg351mp") == 0)
+	{
 		/* GO3 rev1.0 */
 		env_set_hex("st_dtb", 0x3068);
 
@@ -344,6 +346,23 @@ void board_set_spilayout(void)
 		env_set_hex("st_battery_3", 0x2D48);
 		env_set_hex("st_battery_fail", 0x2ED8);
 	}
+#else
+		/* GO3 rev1.0 */
+		env_set_hex("st_dtb", 0x3068);
+
+		env_set_hex("st_logo_hardkernel", 0x3130);
+		env_set_hex("st_logo_lowbatt", 0x32C0);
+		env_set_hex("st_logo_recovery", 0x3450);
+		env_set_hex("st_logo_err", 0x35E0);
+		env_set_hex("st_logo_nosdcard", 0x3770);
+
+		env_set_hex("st_battery_0", 0x3900);
+		env_set_hex("st_battery_1", 0x3A90);
+		env_set_hex("st_battery_2", 0x3C20);
+		env_set_hex("st_battery_3", 0x3DB0);
+		env_set_hex("st_battery_fail", 0x3F40);
+	
+#endif	
 }
 
 int init_kernel_dtb(void)

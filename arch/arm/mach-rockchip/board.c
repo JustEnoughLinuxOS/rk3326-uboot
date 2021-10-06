@@ -310,13 +310,12 @@ void board_check_hwrev(void)
 
 void board_set_spilayout(void)
 {
-#if 0	
 	char *hwrev = env_get("hwrev");
 
 	/* adjust only offsets, size values are same */
 	if (strcmp(hwrev, "rg351mp") == 0)
 	{
-		/* GO3 rev1.0 */
+		/* RG351MP */
 		env_set_hex("st_dtb", 0x3068);
 
 		env_set_hex("st_logo_hardkernel", 0x3130);
@@ -331,7 +330,7 @@ void board_set_spilayout(void)
 		env_set_hex("st_battery_3", 0x3DB0);
 		env_set_hex("st_battery_fail", 0x3F40);
 	} else {
-		/* GO2 rev1.0/rev1.1 */
+		/* RG351MP / RG351V */
 		env_set_hex("st_dtb", 0x2000);
 
 		env_set_hex("st_logo_hardkernel", 0x20C8);
@@ -346,23 +345,6 @@ void board_set_spilayout(void)
 		env_set_hex("st_battery_3", 0x2D48);
 		env_set_hex("st_battery_fail", 0x2ED8);
 	}
-#else
-		/* GO3 rev1.0 */
-		env_set_hex("st_dtb", 0x3068);
-
-		env_set_hex("st_logo_hardkernel", 0x3130);
-		env_set_hex("st_logo_lowbatt", 0x32C0);
-		env_set_hex("st_logo_recovery", 0x3450);
-		env_set_hex("st_logo_err", 0x35E0);
-		env_set_hex("st_logo_nosdcard", 0x3770);
-
-		env_set_hex("st_battery_0", 0x3900);
-		env_set_hex("st_battery_1", 0x3A90);
-		env_set_hex("st_battery_2", 0x3C20);
-		env_set_hex("st_battery_3", 0x3DB0);
-		env_set_hex("st_battery_fail", 0x3F40);
-	
-#endif	
 }
 
 int init_kernel_dtb(void)
@@ -381,43 +363,36 @@ int init_kernel_dtb(void)
 		printf("No Found FDT Load Address.\n");
 		return -1;
 	}
-
-	ret = rockchip_read_dtb_file((void *)fdt_addr);
-	if (ret < 0) {
-#ifdef CONFIG_PLATFORM_ODROID_GOADV
-		/* skip spi flash in case of recovery boot */
+////
+	//SD
+	ret = run_command("fatload mmc 1:1 ${fdt_addr_r} ${dtb_name}", 0);
+	if (ret == CMD_RET_SUCCESS) {
+		ret = check_fdt_header(fdt_addr);
+	} 
+	
+	//SPI
+	if (ret != CMD_RET_SUCCESS) {
 		if (recovery_check_mandatory_files()) {
-			printf("dtb in resource read fail, try dtb in spi flash\n");
+			printf("dtb in fat fs fail, try dtb in spi flash\n");
 			run_command("rksfc scan", 0);
 			run_command("rksfc dev 1", 0);
 			ret = run_command("rksfc read ${fdt_addr_r} ${st_dtb} ${sz_dtb}", 0);
 			if (ret == CMD_RET_SUCCESS)
 				ret = check_fdt_header(fdt_addr);
-		}
-
-		if (ret != CMD_RET_SUCCESS) {
-			printf("dtb in spi flash fail, try dtb in fat\n");
-			ret = run_command("fatload mmc 1:1 ${fdt_addr_r} ${dtb_name}", 0);
-			if (ret != CMD_RET_SUCCESS) {
-				printf("%s dtb in fat fs fail\n", __func__);
-				odroid_drop_errorlog("dtb load fail", 13);
-				odroid_alert_leds();
-				return 0;
-			} else {
-				if (CMD_RET_SUCCESS != check_fdt_header(fdt_addr)) {
-					printf("%s dtb in fat fs fail\n", __func__);
-					odroid_drop_errorlog("dtb load fail", 13);
-					odroid_alert_leds();
-					return 0;
-				}
-			}
-		}
-#else
-		printf("%s dtb in resource read fail\n", __func__);
-		return 0;
-#endif /* CONFIG_PLATFORM_ODROID_GOADV */
+		}		
 	}
-
+	//Resource
+	if (ret != CMD_RET_SUCCESS) {
+		ret = rockchip_read_dtb_file((void *)fdt_addr);
+		if (ret < 0) {
+			printf("%s dtb in resource read fail\n", __func__);
+			odroid_drop_errorlog("dtb load fail", 13);
+			odroid_alert_leds();
+			return 0;		
+		}
+	}
+	
+////	
 	/*
 	 * There is a phandle miss match between U-Boot and kernel dtb node,
 	 * the typical is cru phandle, we fixup it in U-Boot live dt nodes.
@@ -433,7 +408,7 @@ int init_kernel_dtb(void)
 	if (ret)
 		return ret;
 
-	return 0;
+	return 0;	
 }
 #endif
 

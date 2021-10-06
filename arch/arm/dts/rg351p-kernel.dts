@@ -15,7 +15,7 @@
 
 / {
 	model = "RG351P for linux based on Rockchip rk3326";
-	compatible = "rockchip,rk3326-odroidgo2-linux-v11", "rockchip,rk3326";
+	compatible = "rockchip,rk3326-rg351p-linux", "rockchip,rk3326";
 
 	chosen {
                 bootargs = "";
@@ -216,18 +216,6 @@
 		regulator-always-on;
 		regulator-min-microvolt = <3800000>;
 		regulator-max-microvolt = <3800000>;
-	};
-
-	vcc_host: vcc_host {
-		compatible = "regulator-fixed";
-		regulator-name = "vcc_host";
-		regulator-min-microvolt = <5000000>;
-		regulator-max-microvolt = <5000000>;
-
-		gpio = <&gpio0 RK_PB7 GPIO_ACTIVE_HIGH>;
-		enable-active-high;
-		regulator-always-on;
-		vin-supply = <&vccsys>;
 	};
 
 	ext_cam_clk: external-camera-clock {

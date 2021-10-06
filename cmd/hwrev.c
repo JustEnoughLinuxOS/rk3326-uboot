@@ -18,7 +18,7 @@ int do_hwrev(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 		printf("board hw rev failed\n");
 		return CMD_RET_FAILURE;
 	}
-#if 0
+#if 1
 	/* RG351MP */
 	if (check_range(146, 186, hwrev_adc)) {
 		env_set("hwrev", "rg351mp");
@@ -45,7 +45,7 @@ int do_hwrev(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 
 #endif
 	printf("adc0 (hw rev) %d\n", hwrev_adc);
-
+printf("Model = %s\n",env_get("hwrev"));
 	return CMD_RET_SUCCESS;
 }
 

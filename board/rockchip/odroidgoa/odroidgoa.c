@@ -21,6 +21,8 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
+#define RUMBLE_GPIO	15 /* GPIO0_B7 */
+
 #define ALIVE_LED_GPIO	17 /* GPIO0_C1 */
 #define WIFI_EN_GPIO	110 /* GPIO3_B6 */
 
@@ -28,13 +30,38 @@ unsigned char disp_offs = 0;
 
 bool is_odroidgo3(void)
 {
+#if 0
 	char *hwrev = env_get("hwrev");
-
 	if (!strcmp(hwrev, "v10-go3"))
 		return true;
 	else
 		return false;
+#else
+	return false;		
+#endif
 }
+
+int get_rg351_rev(void)
+{
+	char *hwrev = env_get("hwrev");
+
+	if (!strcmp(hwrev, "rg351p"))
+		return MODEL_RG351P;
+	else if (!strcmp(hwrev, "rg351v"))
+		return MODEL_RG351V;
+	else if (!strcmp(hwrev, "rg351mp"))
+		return MODEL_RG351MP;
+	return 0;
+
+}
+
+void board_rumble(void)
+{
+	gpio_request(RUMBLE_GPIO, "rumble");
+	gpio_direction_output(RUMBLE_GPIO, 0);
+	gpio_free(RUMBLE_GPIO);
+}
+
 
 void board_alive_led(void)
 {
@@ -160,8 +187,9 @@ int rk_board_late_init(void)
 	if (is_odroidgo3())
 		disp_offs = 9;
 
+	board_rumble();
 	/* turn on blue led */
-	board_alive_led();
+	//board_alive_led();
 
 	/* set wifi_en as default high */
 	if (!is_odroidgo3())

@@ -14,7 +14,7 @@
 #include "rk3326-linux.dtsi"
 
 / {
-	model = "ODROID-GO2 v1.1 for linux based on Rockchip rk3326";
+	model = "RG351P for linux based on Rockchip rk3326";
 	compatible = "rockchip,rk3326-odroidgo2-linux-v11", "rockchip,rk3326";
 
 	chosen {

@@ -81,7 +81,7 @@
 	"setbootargs=setenv bootargs earlyprintk swiotlb=1 "		\
 		"console=ttyFIQ0,115200n8 "				\
 		"rw root=/dev/mmcblk0p2 rootwait rw fsck.repair=yes "	\
-		"net.iframes=0 fbcon=rotate:3\0"	\
+		"net.iframes=0 fbcon=rotate:${lcd_rotate}\0"	\
 	"bootcmd=mmc dev 1; cfgload; run setbootargs;"	\
 		"load mmc 1:1 0x02000000 Image; "		\
 		"load mmc 1:1 0x01f00000 ${dtb_name}; "	\

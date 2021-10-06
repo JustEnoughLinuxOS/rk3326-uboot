@@ -22,7 +22,7 @@ pack_spi_full_image()
 	dd if=${OUT}/trust_spi.img of=${OUT}/spi_recovery.img bs=512 seek=4096 count=4096 conv=fsync,notrunc
 
 	# ODROID-GO2 dtb
-	dd if=./arch/arm/dts/odroidgo2-kernel-v11.dtb of=${OUT}/spi_recovery.img bs=512 seek=8192 count=200 conv=fsync,notrunc
+	dd if=./arch/arm/dts/rg351p-kernel.dtb of=${OUT}/spi_recovery.img bs=512 seek=8192 count=200 conv=fsync,notrunc
 	# ODROID-GO2 bmp images
 	dd if=${IMAGES}/logo_hardkernel.bmp.gz of=${OUT}/spi_recovery.img bs=512 seek=8392 conv=fsync,notrunc
 	dd if=${IMAGES}/low_battery.bmp.gz of=${OUT}/spi_recovery.img bs=512 seek=8792 conv=fsync,notrunc
@@ -37,7 +37,7 @@ pack_spi_full_image()
 	dd if=${IMAGES}/battery_fail.bmp.gz of=${OUT}/spi_recovery.img bs=512 seek=11992 conv=fsync,notrunc
 
 	# ODROID-GO3 dtb
-	dd if=./arch/arm/dts/odroidgo3-kernel.dtb of=${OUT}/spi_recovery.img bs=512 seek=12392 count=200 conv=fsync,notrunc
+	dd if=./arch/arm/dts/rg351mp-kernel.dtb of=${OUT}/spi_recovery.img bs=512 seek=12392 count=200 conv=fsync,notrunc
 	# ODROID-GO3 bmp images
 	dd if=${IMAGES}/logo_hardkernel_b.bmp.gz of=${OUT}/spi_recovery.img bs=512 seek=12592 conv=fsync,notrunc
 	dd if=${IMAGES}/low_battery_b.bmp.gz of=${OUT}/spi_recovery.img bs=512 seek=12992 conv=fsync,notrunc
@@ -67,7 +67,7 @@ pack_recovery_sdcard_img()
 
 	sudo mount ${OUT}/vfat.fs ${MNT}
 	sudo cp ${OUT}/spi_recovery.img* ${MNT}
-
+zd
 	# ODROID-GO2 rev1.0/rev1.1
 	sudo cp ${IMAGES}/recovery.bmp ${MNT}
 	sudo cp ${IMAGES}/system_error.bmp ${MNT}

@@ -10,8 +10,8 @@
 #include <dt-bindings/input/input.h>
 
 / {
-	model = "Rockchip RK3326 ODROID-GO Advanced";
-	compatible = "rockchip,odroidgoa", "rockchip,rk3326";
+	model = "Rockchip RK3326 RG351 Series";
+	compatible = "rockchip,rg351mp", "rockchip,rk3326";
 
 	backlight: backlight {
 		compatible = "pwm-backlight";
@@ -85,18 +85,6 @@
 			regulator-boot-on;
 			regulator-min-microvolt = <3800000>;
 			regulator-max-microvolt = <3800000>;
-		};
-
-		vcc_host: vcc_host {
-			compatible = "regulator-fixed";
-			regulator-name = "vcc_host";
-			regulator-min-microvolt = <5000000>;
-			regulator-max-microvolt = <5000000>;
-
-			gpio = <&gpio0 RK_PB7 GPIO_ACTIVE_HIGH>;
-			enable-active-high;
-			regulator-always-on;
-			vin-supply = <&vccsys>;
 		};
 
 		rk817_pin0_ts: rk817_pin0_ts {

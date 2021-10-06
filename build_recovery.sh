@@ -67,7 +67,7 @@ pack_recovery_sdcard_img()
 
 	sudo mount ${OUT}/vfat.fs ${MNT}
 	sudo cp ${OUT}/spi_recovery.img* ${MNT}
-zd
+
 	# ODROID-GO2 rev1.0/rev1.1
 	sudo cp ${IMAGES}/recovery.bmp ${MNT}
 	sudo cp ${IMAGES}/system_error.bmp ${MNT}

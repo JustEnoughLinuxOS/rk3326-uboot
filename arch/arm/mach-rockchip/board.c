@@ -330,7 +330,7 @@ void board_set_spilayout(void)
 		env_set_hex("st_battery_3", 0x3DB0);
 		env_set_hex("st_battery_fail", 0x3F40);
 	} else {
-		/* RG351MP / RG351V */
+		/* RG351P / RG351V */
 		env_set_hex("st_dtb", 0x2000);
 
 		env_set_hex("st_logo_hardkernel", 0x20C8);

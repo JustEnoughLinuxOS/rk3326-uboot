@@ -184,9 +184,14 @@ err:
 
 int rk_board_late_init(void)
 {
-	if (is_odroidgo3())
-		disp_offs = 9;
-
+	switch (get_rg351_rev())
+	{
+		case MODEL_RG351V:
+		case MODEL_RG351MP:
+			disp_offs = 10;
+		break;
+		
+	}
 	board_rumble();
 	/* turn on blue led */
 	//board_alive_led();

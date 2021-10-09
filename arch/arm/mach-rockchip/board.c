@@ -365,7 +365,7 @@ int init_kernel_dtb(void)
 	}
 ////
 	//SD
-	ret = run_command("fatload mmc 1:1 ${fdt_addr_r} ${dtb_name}", 0);
+	ret = run_command("fatload mmc 1:1 ${fdt_addr_r} ${dtb_uboot}", 0);
 	if (ret == CMD_RET_SUCCESS) {
 		ret = check_fdt_header(fdt_addr);
 	} 

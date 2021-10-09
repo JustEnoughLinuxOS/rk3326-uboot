@@ -11,9 +11,9 @@ TRUST=trust.img
 
 
 ./make.sh odroidgoa && 
-sshpass -p "root" scp ./arch/arm/dts/rg351mp-kernel.dtb root@$1:/boot && 
-sshpass -p "root" scp ./arch/arm/dts/rg351v-kernel.dtb root@$1:/boot && 
-sshpass -p "root" scp ./arch/arm/dts/rg351p-kernel.dtb root@$1:/boot && 
+sshpass -p "root" scp ./arch/arm/dts/rg351mp-uboot.dtb root@$1:/boot && 
+sshpass -p "root" scp ./arch/arm/dts/rg351v-uboot.dtb root@$1:/boot && 
+sshpass -p "root" scp ./arch/arm/dts/rg351p-uboot.dtb root@$1:/boot && 
 sshpass -p "root" scp ./sd_fuse/$IDBLOADER root@$1:/tmp && 
 sshpass -p "root" scp ./sd_fuse/$UBOOT root@$1:/tmp && 
 sshpass -p "root" scp ./sd_fuse/$TRUST root@$1:/tmp && 

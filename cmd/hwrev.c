@@ -22,22 +22,22 @@ int do_hwrev(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 	/* RG351MP */
 	if (check_range(146, 186, hwrev_adc)) {
 		env_set("hwrev", "rg351mp");
-		env_set("dtb_name", "rg351mp-kernel.dtb");
+		env_set("dtb_name", "rg351mp-uboot.dtb");
 	}
 	/* RG351V */
 	else if (check_range(494, 534, hwrev_adc)) {
 		env_set("hwrev", "rg351v");
-		env_set("dtb_name", "rg351v-kernel.dtb");
+		env_set("dtb_name", "rg351v-uboot.dtb");
 	}
 	/* RG351P */
 	else if (check_range(655, 695, hwrev_adc)) {
 		env_set("hwrev", "rg351p");
-		env_set("dtb_name", "rg351p-kernel.dtb");
+		env_set("dtb_name", "rg351p-uboot.dtb");
 	}
 	/* Unknown */
 	else {
 		env_set("hwrev", "v00");
-		env_set("dtb_name", "rg351p-kernel.dtb");
+		env_set("dtb_name", "rg351p-uboot.dtb");
 	}
 #else
 		env_set("hwrev", "rg351mp");

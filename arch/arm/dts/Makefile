@@ -57,9 +57,9 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += \
 	rk3399-puma-ddr1600.dtb \
 	rk3399-puma-ddr1866.dtb \
 	rv1108-evb.dtb \
-	rg351p-kernel.dtb \
-	rg351v-kernel.dtb \
-	rg351mp-kernel.dtb
+	rg351p-uboot.dtb \
+	rg351v-uboot.dtb \
+	rg351mp-uboot.dtb
 dtb-$(CONFIG_ARCH_MESON) += \
 	meson-gxbb-odroidc2.dtb
 dtb-$(CONFIG_TEGRA) += tegra20-harmony.dtb \

@@ -34,102 +34,6 @@
 		status = "okay";
 	};
 
-	keys: gpio-keys {
-		compatible = "gpio-keys";
-		status = "okay";
-
-		sw1 {
-                        gpios = <&gpio1 RK_PB4 GPIO_ACTIVE_LOW>;
-                        label = "GPIO DPAD-UP";
-                        linux,code = <BTN_DPAD_UP>;
-                };
-                sw2 {
-                        gpios = <&gpio1 RK_PB5 GPIO_ACTIVE_LOW>;
-                        label = "GPIO DPAD-DOWN";
-                        linux,code = <BTN_DPAD_DOWN>;
-                };
-                sw3 {
-                        gpios = <&gpio1 RK_PB6 GPIO_ACTIVE_LOW>;
-                        label = "GPIO DPAD-LEFT";
-                        linux,code = <BTN_DPAD_LEFT>;
-                };
-                sw4 {
-                        gpios = <&gpio1 RK_PB7 GPIO_ACTIVE_LOW>;
-                        label = "GPIO DPAD-RIGHT";
-                        linux,code = <BTN_DPAD_RIGHT>;
-                };
-                sw5 {
-                        gpios = <&gpio1 RK_PA2 GPIO_ACTIVE_LOW>;
-                        label = "GPIO KEY BTN-A";
-                        linux,code = <BTN_EAST>;
-                };
-                sw6 {
-                        gpios = <&gpio1 RK_PA5 GPIO_ACTIVE_LOW>;
-                        label = "GPIO BTN-B";
-                        linux,code = <BTN_SOUTH>;
-                };
-                sw7 {
-                        gpios = <&gpio1 RK_PA6 GPIO_ACTIVE_LOW>;
-                        label = "GPIO BTN-Y";
-                        linux,code = <BTN_WEST>;
-                };
-                sw8 {
-                        gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_LOW>;
-                        label = "GPIO BTN-X";
-                        linux,code = <BTN_NORTH>;
-                };
-                sw9 {
-                        gpios = <&gpio2 RK_PA0 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F1";
-                        linux,code = <BTN_TRIGGER_HAPPY1>;
-                };
-                sw10 {
-                        gpios = <&gpio2 RK_PA1 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F2";
-                        linux,code = <BTN_TRIGGER_HAPPY2>;
-                };
-                sw11 {
-                        gpios = <&gpio2 RK_PA2 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F3";
-                        linux,code = <BTN_TRIGGER_HAPPY3>;
-                };
-                sw12 {
-                        gpios = <&gpio2 RK_PA3 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F4";
-                        linux,code = <BTN_TRIGGER_HAPPY4>;
-                };
-                sw13 {
-                        gpios = <&gpio2 RK_PA4 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F5";
-                        linux,code = <BTN_TRIGGER_HAPPY5>;
-                };
-                sw14 {
-                        gpios = <&gpio2 RK_PA5 GPIO_ACTIVE_LOW>;
-                        label = "GPIO F6";
-                        linux,code = <BTN_TRIGGER_HAPPY6>;
-                };
-                sw15 {
-                        gpios = <&gpio2 RK_PA6 GPIO_ACTIVE_LOW>;
-                        label = "GPIO TOP-LEFT";
-                        linux,code = <BTN_TL>;
-                };
-                sw16 {
-                        gpios = <&gpio2 RK_PA7 GPIO_ACTIVE_LOW>;
-                        label = "GPIO TOP-RIGHT";
-                        linux,code = <BTN_TR>;
-                };
-		sw20 {
-                        gpios = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
-                        label = "GPIO TOP-LEFT2";
-                        linux,code = <BTN_TL2>;
-                };
-                sw21 {
-                        gpios = <&gpio3 RK_PB2 GPIO_ACTIVE_LOW>;
-                        label = "GPIO TOP-RIGHT2";
-                        linux,code = <BTN_TR2>;
-                };
-	};
-
 	leds: gpio_leds {
 		compatible = "gpio-leds";
 		status = "okay";
@@ -142,8 +46,8 @@
 		};
 
 		battery {
-			label = "battery_charging";
-			gpios = <&gpio0 RK_PB5 GPIO_ACTIVE_HIGH>;
+			label = "battery_low";
+			gpios = <&gpio2 RK_PB5 GPIO_ACTIVE_LOW>;
 			default-state = "on";
 		};
 	};
@@ -212,10 +116,10 @@
 
 		rockchip,uboot-charge-on = <1>;
 		rockchip,android-charge-on = <0>;
-		rockchip,uboot-exit-charge-level = <5>;
-		rockchip,uboot-exit-charge-voltage = <3650>;
-		rockchip,screen-on-voltage = <3400>;
-		rockchip,uboot-low-power-voltage = <3350>;
+		rockchip,uboot-exit-charge-level = <0>;
+		rockchip,uboot-exit-charge-voltage = <3362>;
+		rockchip,screen-on-voltage = <3300>;
+		rockchip,uboot-low-power-voltage = <3342>;
 		/* turn off screen only, no suspend */
 		rockchip,system-suspend = <0>;
 		/* auto screen-off in 10 seconds */
@@ -669,9 +573,10 @@
 
 		battery {
 			compatible = "rk817_fg";
-			ocv_table = <3500 3625 3685 3697 3718 3735 3748
-			3760 3774 3788 3802 3816 3834 3853
-			3877 3908 3946 3975 4018 4071 4106>;
+			ocv_table = <3300 3342 3384 3426 3468 3511 3554
+			3597 3640 3683 3726 3769 3812 3855
+			3898 3941 3984 4027 4070 4113 4158>;
+
 
 			/* KPL605475 Battery Spec */
 			/*
@@ -683,18 +588,19 @@
 				Charging Voltage Max : 4.25V
 				Sample resister : 10 mohm
 			*/
-			design_capacity = <3000>;
-			design_qmax = <3000>;
-			bat_res = <180>;
+			design_capacity = <3450>;
+			design_qmax = <3795>;
+			bat_res = <100>;
 			sleep_enter_current = <300>;
 			sleep_exit_current = <300>;
 			sleep_filter_current = <100>;
-			power_off_thresd = <3500>;
-			zero_algorithm_vol = <3700>;
+			power_off_thresd = <3400>;
+			zero_algorithm_vol = <3850>;
 			max_soc_offset = <60>;
 			monitor_sec = <5>;
 			virtual_power = <0>;
 			sample_res = <10>;
+			power_dc2otg = <0>;
 		};
 
 		charger {
@@ -704,7 +610,7 @@
 			max_chrg_current = <2000>;
 			max_chrg_voltage = <4200>;
 			chrg_term_mode = <0>;
-			chrg_finish_cur = <300>;
+			chrg_finish_cur = <66>;
 			virtual_power = <0>;
 			sample_res = <10>;
 

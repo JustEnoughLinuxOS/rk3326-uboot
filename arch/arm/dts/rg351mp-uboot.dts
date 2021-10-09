@@ -392,13 +392,13 @@
 		display-timings {
 			native-mode = <&timing0>;
 
-			timing0: 60Hz {
-				clock-frequency = <25500000>;
+			timing0: timing0 {
+				clock-frequency = <26400000>;
 				hactive = <640>;
 				vactive = <480>;
-				hfront-porch = <104>;
+				hfront-porch = <119>;
 				hsync-len = <2>;
-				hback-porch = <104>;
+				hback-porch = <119>;
 				vfront-porch = <13>;
 				vsync-len = <2>;
 				vback-porch = <5>;
